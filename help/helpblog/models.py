@@ -1,11 +1,13 @@
 from django.db import models
 from django.utils import timezone
 import datetime
+from transliterate import slugify
 
 # Create your models here.
 class Question(models.Model):
     question_text = models.CharField(max_length = 200)
     pub_date = models.DateTimeField('date published')
+    symbol_code = models.CharField(max_length = 100, blank = True, null = True)
 
     def __str__(self):
         return self.question_text
@@ -15,6 +17,11 @@ class Question(models.Model):
     was_published_recently.admin_order_field = 'pub_date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Published recently?'
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.symbol_code = slugify(self.question_text)
+        super(Question, self).save(*args, **kwargs)
 
 class Choise(models.Model):
     question = models.ForeignKey(Question)
