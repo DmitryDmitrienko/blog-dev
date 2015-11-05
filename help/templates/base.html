@@ -1,0 +1,10 @@
+{% load staticfiles %}
+ {% load pagination_tags %}
+ {% autopaginate object_list%}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+{% for object in object_list %}
+    <div>
+        First name: {{ object.question_text }}
+    </div>
+{% endfor %}
+{% paginate %}

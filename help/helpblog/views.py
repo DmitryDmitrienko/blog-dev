@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.template import RequestContext, loader
+from django.http import Http404
 
-from .models import Question
+from django.views.generic import ListView
 
-# Create your views here.
+from pure_pagination.mixins import PaginationMixin
 
 def index(request):
-    return HttpResponse('Hello Django!')
+    return HttpResponse("World!")
 
 def question(request, symbol_code):
-    q = Question.objects.get(symbol_code=symbol_code)
-    return HttpResponse(q.question_text)
+    return HttpResponse("Hello!")
